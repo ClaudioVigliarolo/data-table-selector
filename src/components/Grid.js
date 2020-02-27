@@ -6,9 +6,6 @@ import uuid from 'react-uuid'
 
 export default function Grid(props) {
   const [isloaded, setLoaded] = useState(false);
-  const [gridSelected, setGridSelected] = useState([]);
-
-
 
   useEffect(() => {
     if (props.data && !isloaded) {
@@ -18,14 +15,6 @@ export default function Grid(props) {
       setLoaded({ isLoaded: true })
     }
   });
-
-
-  useEffect(() => {
-    if (props.selected.length > 0) {
-      setGridSelected(gridSelected => [...gridSelected.concat(props.selected)])
-    }
-  }, [props.selected]);
-
 
   const getRows = (data) => {
     let rows = data;
@@ -73,7 +62,10 @@ export default function Grid(props) {
 
 
   const getSelectedProps = () => {
-    return props.selected
+    if (props.selected.length > 0)
+      return props.selected
+
+    return []
   }
   const defaultColumns = [
     { key: "id", name: "ID (hex)", editable: false },
@@ -84,9 +76,9 @@ export default function Grid(props) {
     },
     { key: "Checksum", name: "Checksum", editable: false },
   ];
-  const { height, width } = useWindowDimensions();
+  const { height } = useWindowDimensions();
   return (
-    <div style={{ width: '100%' }} id="grid" >
+    <div style={{ width: '100%' }} id="grid" key={props.selected}>
       {props.rows.length > 0 && <ReactDataGrid
         columns={defaultColumns}
         rowGetter={i => props.rows[i]}
