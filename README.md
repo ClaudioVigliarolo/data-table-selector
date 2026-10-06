@@ -1,4 +1,3 @@
-https://datatable-bitselector.herokuapp.com/
 
 ## data-table-selector
 A small and pratical program, created to simplify the work in a reverse engeenering project.
